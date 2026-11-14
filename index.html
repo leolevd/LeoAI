@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>leolevd AI</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #fff;
+            background: #000;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        main {
+            width: min(100%, 760px);
+            margin: 0 auto;
+        }
+
+        header {
+            padding: 0 0 22px;
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(32px, 7vw, 48px);
+            letter-spacing: -.05em;
+        }
+
+        .content {
+            display: grid;
+            gap: 14px;
+        }
+
+        .text-space,
+        .code-space {
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #111;
+        }
+
+        .text-space {
+            min-height: 112px;
+            padding: 22px;
+        }
+
+        .text-space p {
+            margin: 0;
+            color: #fff;
+            line-height: 1.7;
+        }
+
+        .code-space {
+            overflow: hidden;
+        }
+
+        .code-label {
+            padding: 12px 18px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        pre {
+            min-height: 120px;
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+            background: #000;
+            color: #fff;
+            font: 14px/1.65 Consolas, "Courier New", monospace;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 28px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>leolevd AI</h1>
+        </header>
+
+        <section class="content" aria-label="Project content">
+            <article class="text-space">
+                <p>Welcome to my little ai experiment! This is a proxy that enables you to use ai models for free. As
+                    more models are used up to their max, the wait time may become longer. I created this proxy for a
+                    simple way to access ai models, use them, and integrate them into projects. The time, however, can
+                    be a problem, since it will take longer to get a response as more models get used up etc etc.</p>
+            </article>
+            <article class="text-space">
+                <p>Privacy statement: this proxy uses api from several providers: nvidia, gonka, kilo, vercel, empero.
+                    Do not share sensitive data since providers "nvidia" and "gonka" have explicitly stated they use
+                    your data. How other providers handle your data is unknown. Sharing sensitive info is strongly not
+                    advised. <a href="/tos">Terms of Service</a>
+
+                </p>
+            </article>
+            <article class="text-space">
+                <p>Let's drop formalities now, meow. I am leolevd, a cat, that loves ai and free stuff. This proxy was
+                    made using models from #free-ai on slack, so ty!!</p>
+            </article>
+            <section class="code-space" aria-label="Python code">
+                <div class="code-label">Python</div>
+                <pre><code>
+# The usage is simple:
+# you need a dict containing field "messages"
+# everything else will be ignored
+# You can't pick models because im using different services that don't share same models
+# For example:
+payloaddict = {
+    "messages": [
+        {"role": "system", "content": "Ur a meowy assistant"},
+        {"role": "user", "content": "tell me a joke"}
+    ]
+}
+import requests
+print(requests.post("https://ai.leolevd.dev/api/v1/chat/completions", json=payloaddict).json())
+                </code></pre>
+            </section>
+        </section>
+    </main>
+</body>
+
+</html>
