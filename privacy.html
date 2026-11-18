@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How leolevd AI processes requests, handles local data, and shares data with AI providers.">
+    <title>Privacy Policy | leolevd AI</title>
+    <style>
+        :root { color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif; color: #fff; background: #000; }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 40px 20px; line-height: 1.7; }
+        main { width: min(100%, 760px); margin: 0 auto; }
+        header { margin-bottom: 32px; }
+        h1 { margin: 16px 0 0; font-size: clamp(32px, 7vw, 48px); letter-spacing: -.05em; line-height: 1.2; }
+        h2 { margin: 0 0 12px; font-size: 23px; line-height: 1.3; }
+        h3 { margin: 24px 0 8px; font-size: 18px; }
+        section { margin-bottom: 14px; padding: 22px; border: 1px solid #333; border-radius: 8px; background: #111; }
+        p { margin: 0 0 12px; }
+        p:last-child { margin-bottom: 0; }
+        ul { margin: 0; padding-left: 22px; }
+        li + li { margin-top: 12px; }
+        a { color: #a8caff; text-underline-offset: 3px; overflow-wrap: anywhere; }
+        a:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+        .updated { color: #bbb; margin-top: 12px; }
+        @media (max-width: 480px) { body { padding: 28px 16px; } section { padding: 18px; } }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <nav aria-label="Main navigation"><a href="/">leolevd AI home</a> &middot; <a href="/tos">Terms of Service</a></nav>
+            <h1>Privacy Policy</h1>
+            <p class="updated">Last updated: <time datetime="2026-11-18">18 November 2026</time></p>
+        </header>
+
+        <section aria-labelledby="overview">
+            <h2 id="overview">Before you send a request</h2>
+            <p>I am leolevd, the operator of this AI proxy. This page describes the current app's data handling
+                and the external providers used to answer requests.</p>
+            <p><strong>I do not collect your data for my own use or store your conversations.</strong>
+                The proxy temporarily processes requests to provide responses and prevent abuse. External AI
+                providers handle the data sent to them under their own policies, described below.</p>
+            <p><strong>Do not send passwords, API keys, confidential documents, or sensitive personal information.</strong>
+                This service does not guarantee zero data retention across its providers.</p>
+        </section>
+
+        <section aria-labelledby="sharing">
+            <h2 id="sharing">What is sent to providers</h2>
+            <p>The proxy receives your request and forwards its JSON body, including messages, conversation history,
+                and any other fields you include, to an AI provider to generate a response. It replaces the model
+                field with the configured model; it does not anonymize or remove personal information from the body.</p>
+            <p>The current provider order is NVIDIA, Gonka Broker, Kilo, Vercel, then Empero. If a provider returns
+                an unsuccessful HTTP status, the proxy tries the next provider. The same request can therefore
+                reach several providers, even if you receive only one response or an error.</p>
+            <p>Providers receive the proxy's API credentials and network connection, rather than your incoming
+                request headers. Any identifying information you include in the request body is still forwarded.
+                Gateway providers may pass requests to additional inference providers.</p>
+        </section>
+
+        <section aria-labelledby="local">
+            <h2 id="local">How I handle data</h2>
+            <ul>
+                <li><strong>Messages and responses:</strong> the app processes these in server memory to forward
+                    requests and return answers. It has no database or file storage for chat history and does not
+                    save prompts or responses as conversation history.</li>
+                <li><strong>Rate limiting:</strong> the app uses the client IP address visible to the server to
+                    maintain temporary counters in memory, enforcing 10 requests per minute. Counter expiry follows
+                    the rate-limit window, and restarting the process clears this in-memory state.</li>
+                <li><strong>Diagnostic logs:</strong> the app prints provider names and HTTP error status codes,
+                    not provider response bodies or message content. Server access
+                    logs may also include IP addresses, request paths, times, and status codes.</li>
+                <li><strong>Log retention:</strong> the app does not configure log storage, rotation, or deletion.
+                    How long logs are kept depends on the server and hosting setup; a retention period has not
+                    been confirmed. No promise of immediate deletion or zero logging is made.</li>
+                <li><strong>Cookies and analytics:</strong> the current pages do not set cookies, use browser
+                    storage, or include analytics scripts. No user account is required by this proxy.</li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="providers">
+            <h2 id="providers">Providers and their data policies</h2>
+            <p>These summaries reflect the sources linked below as reviewed on the date above. Provider terms,
+                selected models, and account settings can change. Unconfirmed retention periods are not guarantees
+                that data is deleted.</p>
+
+            <h3>NVIDIA</h3>
+            <p>NVIDIA's API Trial Terms describe session-based processing with exceptions for particular services
+                and security or abuse monitoring. Section 3.3 also allows collection of inputs and outputs to improve
+                products, including AI models. There is no single verified retention period for this proxy's chat
+                requests. The 30/90-day periods in those terms concern specific services, including fine-tuning,
+                and are not a general chat retention promise.</p>
+            <p><a href="https://assets.ngc.nvidia.com/products/api-catalog/legal/NVIDIA%20API%20Trial%20Terms%20of%20Service.pdf">NVIDIA API Trial Terms (sections 2 and 3)</a>
+                &middot; <a href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">NVIDIA Privacy Policy</a></p>
+
+            <h3>Gonka Broker</h3>
+            <p>The configured Gonka service is Gonka Broker, which routes inference through the decentralized Gonka
+                network. Gonka Broker states that it does not store prompts or completions, and keeps request counts,
+                token counts, timestamps, and price for billing and abuse prevention. Its homepage does not specify
+                how long that metadata is retained. This statement is about the broker; it is not an independently
+                verified retention guarantee for every network participant.</p>
+            <p><a href="https://gonkabroker.com/">Gonka Broker's data-handling statement</a></p>
+
+            <h3>Kilo Gateway</h3>
+            <p>Kilo routes requests to inference providers. Its privacy policy describes processing request metadata
+                for authentication, routing, and billing. Prompt retention and training rules vary by downstream
+                provider, as shown in Kilo's provider directory. A specific retention period and zero-retention
+                configuration for this proxy have not been confirmed.</p>
+            <p><a href="https://kilo.ai/privacy">Kilo Privacy Policy</a>
+                &middot; <a href="https://kilo.ai/providers">Kilo provider retention and training policies</a></p>
+
+            <h3>Vercel AI Gateway</h3>
+            <p>Vercel routes requests to model providers and offers optional zero data retention and prompt-training
+                controls. The proxy does not itself enforce those controls, and account-level settings have not been
+                confirmed. Do not assume those protections are enabled; downstream retention depends on the provider
+                and applicable settings. A fixed retention period for this route has not been confirmed.</p>
+            <p><a href="https://vercel.com/blog/zdr-on-ai-gateway">Vercel's retention and training controls</a></p>
+
+            <h3>Empero</h3>
+            <p>The proxy uses Empero's free endpoint. Its current first-party retention, deletion, and model-training
+                terms could not be verified for this notice. Treat content sent through this route as potentially
+                retained or used by the provider; no zero-retention or no-training assurance is offered here.</p>
+            <p><a href="https://free.empero.org/">Empero free endpoint</a></p>
+        </section>
+
+        <section aria-labelledby="choices">
+            <h2 id="choices">Your choices and deletion</h2>
+            <p>Remove identifying or confidential details before submitting a request. This proxy does not offer
+                a provider-selection or training-opt-out control of its own. Your chat client may separately store
+                history; check its settings and privacy policy.</p>
+            <p>There is no stored chat-history account to delete in this app. This does not mean that diagnostic
+                logs or provider-held records are deleted. Provider privacy pages describe their own contact and
+                data-rights processes; requests sent through this proxy use the operator's provider account, so a
+                provider may require the operator's involvement. Deleting local client history does not delete
+                records already sent to providers.</p>
+        </section>
+    </main>
+</body>
+</html>

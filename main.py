@@ -1,5 +1,6 @@
 
 import fastapi
+from pathlib import Path
 from fastapi import FastAPI, Request
 import uvicorn
 
@@ -43,6 +44,13 @@ def read_root():
 @app.get("/tos")
 def read_tos():
     return fastapi.responses.FileResponse("terms_of_service.html")
+
+@app.get("/privacy", response_class=fastapi.responses.FileResponse)
+def read_privacy():
+    return fastapi.responses.FileResponse(
+        Path(__file__).with_name("privacy.html"),
+        media_type="text/html",
+    )
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=80)

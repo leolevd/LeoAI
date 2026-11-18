@@ -32,6 +32,6 @@ def forward_openai_request(payload: dict, name: str) -> dict | None:
     payloadfinal = construct_payload(payload, config[name]["model"])
     response = requests.post(url, headers=headers, json=payloadfinal, timeout=60)
     if response.status_code != 200:
-        print(f"Error: {response.status_code} - {response.text}")
+        print(f"Provider {name} returned HTTP {response.status_code}")
         return None
     return response.json()
