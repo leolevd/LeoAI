@@ -1,1 +1,8 @@
 API/config.json
+data/
+*.sqlite3
+*.sqlite3-*
+.env
+.env.*
+__pycache__/
+keys.json

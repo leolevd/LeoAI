@@ -119,12 +119,19 @@
                 <p>Let's drop formalities now, meow. I am leolevd, a cat, that loves ai and free stuff. This proxy was
                     made using models from #free-ai on slack, so ty!!</p>
             </article>
+            <article class="text-space">
+                <p>Free access needs no API key: you get 10 requests per minute per IP address.
+                    Want a higher limit? <strong>DM @leolevd for an optional API key.</strong>
+                    Keys allow 60 requests per minute by default, shared across all IP addresses using
+                    the same key. Send your key in the <code>Authorization: Bearer YOUR_KEY</code> header.
+                    Keep it private and out of public code. Requests without a key stay free.</p>
+            </article>
             <section class="code-space" aria-label="Python code">
                 <div class="code-label">Python</div>
                 <pre><code>
 # The usage is simple:
 # you need a dict containing field "messages"
-# everything else will be ignored
+# the proxy replaces the model field and forwards the other fields
 # You can't pick models because im using different services that don't share same models
 # For example:
 payloaddict = {
@@ -136,6 +143,21 @@ payloaddict = {
 import requests
 print(requests.post("https://ai.leolevd.dev/api/v1/chat/completions", json=payloaddict).json())
                 </code></pre>
+            </section>
+            <section class="code-space" aria-label="Python with an optional API key">
+                <div class="code-label">Python &mdash; optional higher-limit key</div>
+                <pre><code>import os
+import requests
+
+# Store your key in your client's LEOAI_API_KEY environment variable.
+# Use the same payloaddict as above.
+response = requests.post(
+    "https://ai.leolevd.dev/api/v1/chat/completions",
+    headers={"Authorization": f"Bearer {os.environ['LEOAI_API_KEY']}"},
+    json=payloaddict,
+)
+response.raise_for_status()
+print(response.json())</code></pre>
             </section>
         </section>
         <footer>

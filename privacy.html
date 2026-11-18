@@ -42,7 +42,8 @@
             <p><strong>I do not collect your data for my own use or store your conversations.</strong>
                 The proxy temporarily processes requests to provide responses and prevent abuse. External AI
                 providers handle the data sent to them under their own policies, described below.</p>
-            <p><strong>Do not send passwords, API keys, confidential documents, or sensitive personal information.</strong>
+            <p><strong>Do not put passwords, API keys, confidential documents, or sensitive personal information in messages.</strong>
+                Optional proxy API keys belong only in the Authorization header.
                 This service does not guarantee zero data retention across its providers.</p>
         </section>
 
@@ -66,8 +67,16 @@
                     requests and return answers. It has no database or file storage for chat history and does not
                     save prompts or responses as conversation history.</li>
                 <li><strong>Rate limiting:</strong> the app uses the client IP address visible to the server to
-                    maintain temporary counters in memory, enforcing 10 requests per minute. Counter expiry follows
-                    the rate-limit window, and restarting the process clears this in-memory state.</li>
+                    maintain temporary counters, enforcing 10 requests per minute for unauthenticated access.
+                    Optional valid API keys use a key identifier instead, with a higher limit (60 requests per
+                    minute by default, configurable by the operator). Counters are stored in process memory by
+                    default and reset on restart; deployments may configure a shared counter backend such as Redis.
+                    Counter expiry follows the rate-limit window.</li>
+                <li><strong>Optional API keys:</strong> free access requires no key or account. For issued keys,
+                    the operator stores keys in plain text in a private JSON configuration file until they are
+                    removed. The app reads this file to authenticate requests and uses a hashed key identifier
+                    for rate limiting. Your incoming authorization header is not forwarded to AI providers.
+                    Removing a key revokes it for subsequent requests; deployment backups may retain earlier copies.</li>
                 <li><strong>Diagnostic logs:</strong> the app prints provider names and HTTP error status codes,
                     not provider response bodies or message content. Server access
                     logs may also include IP addresses, request paths, times, and status codes.</li>
@@ -131,7 +140,9 @@
             <p>Remove identifying or confidential details before submitting a request. This proxy does not offer
                 a provider-selection or training-opt-out control of its own. Your chat client may separately store
                 history; check its settings and privacy policy.</p>
-            <p>There is no stored chat-history account to delete in this app. This does not mean that diagnostic
+            <p>There is no stored chat-history account to delete in this app. If you were issued an optional API
+                key, ask the operator who supplied it to revoke it by removing it from the private configuration file.
+                This does not mean that diagnostic
                 logs or provider-held records are deleted. Provider privacy pages describe their own contact and
                 data-rights processes; requests sent through this proxy use the operator's provider account, so a
                 provider may require the operator's involvement. Deleting local client history does not delete
