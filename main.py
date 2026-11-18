@@ -10,7 +10,8 @@ from slowapi.util import get_remote_address
 
 from API.forward import forward_openai_request
 
-providers = ["nvidia", "gonka", "kilo", "vercel", "empero"]
+# Empero's free endpoint is offline for maintenance; exclude it from fallback.
+providers = ["nvidia", "gonka", "kilo", "vercel"]
 
 app = FastAPI()
 
@@ -53,4 +54,4 @@ def read_privacy():
     )
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=80)
+    uvicorn.run(app, host="0.0.0.0", port=26006)

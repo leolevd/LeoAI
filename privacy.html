@@ -51,7 +51,7 @@
             <p>The proxy receives your request and forwards its JSON body, including messages, conversation history,
                 and any other fields you include, to an AI provider to generate a response. It replaces the model
                 field with the configured model; it does not anonymize or remove personal information from the body.</p>
-            <p>The current provider order is NVIDIA, Gonka Broker, Kilo, Vercel, then Empero. If a provider returns
+            <p>The current provider order is NVIDIA, Gonka Broker, Kilo, then Vercel. If a provider returns
                 an unsuccessful HTTP status, the proxy tries the next provider. The same request can therefore
                 reach several providers, even if you receive only one response or an error.</p>
             <p>Providers receive the proxy's API credentials and network connection, rather than your incoming
@@ -71,9 +71,9 @@
                 <li><strong>Diagnostic logs:</strong> the app prints provider names and HTTP error status codes,
                     not provider response bodies or message content. Server access
                     logs may also include IP addresses, request paths, times, and status codes.</li>
-                <li><strong>Log retention:</strong> the app does not configure log storage, rotation, or deletion.
-                    How long logs are kept depends on the server and hosting setup; a retention period has not
-                    been confirmed. No promise of immediate deletion or zero logging is made.</li>
+                <li><strong>Log retention:</strong> no log storage is configured and access logs are not retained
+                    by this app. Hosting infrastructure may independently capture server output or access logs;
+                    this statement applies to the app's own storage.</li>
                 <li><strong>Cookies and analytics:</strong> the current pages do not set cookies, use browser
                     storage, or include analytics scripts. No user account is required by this proxy.</li>
             </ul>
@@ -103,9 +103,11 @@
             <p><a href="https://gonkabroker.com/">Gonka Broker's data-handling statement</a></p>
 
             <h3>Kilo Gateway</h3>
-            <p>Kilo routes requests to inference providers. Its privacy policy describes processing request metadata
-                for authentication, routing, and billing. Prompt retention and training rules vary by downstream
-                provider, as shown in Kilo's provider directory. A specific retention period and zero-retention
+            <p>Kilo routes requests to inference providers and publishes training and retention policies for all
+                126 providers in its directory at the time of this update. Its privacy policy describes processing
+                request metadata for authentication, routing, and billing. Prompt retention and training rules vary
+                by downstream provider; the linked directory identifies those providers and their policies.
+                A specific retention period and zero-retention
                 configuration for this proxy have not been confirmed.</p>
             <p><a href="https://kilo.ai/privacy">Kilo Privacy Policy</a>
                 &middot; <a href="https://kilo.ai/providers">Kilo provider retention and training policies</a></p>
@@ -117,10 +119,10 @@
                 and applicable settings. A fixed retention period for this route has not been confirmed.</p>
             <p><a href="https://vercel.com/blog/zdr-on-ai-gateway">Vercel's retention and training controls</a></p>
 
-            <h3>Empero</h3>
-            <p>The proxy uses Empero's free endpoint. Its current first-party retention, deletion, and model-training
-                terms could not be verified for this notice. Treat content sent through this route as potentially
-                retained or used by the provider; no zero-retention or no-training assurance is offered here.</p>
+            <h3>Empero (currently disabled)</h3>
+            <p>Empero is a German AI research lab offering one model through its free endpoint. At the time of
+                this update, that endpoint displays "MAINTENANCE, endpoint offline". It has been removed from the
+                active fallback chain, so this proxy does not currently send requests to Empero.</p>
             <p><a href="https://free.empero.org/">Empero free endpoint</a></p>
         </section>
 
