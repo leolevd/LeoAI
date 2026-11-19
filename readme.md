@@ -30,7 +30,7 @@ Yay have fun!!
 ## Optional higher-limit API keys
 
 The free proxy stays open: omit `Authorization` for **10 requests/minute per IP**.
-An optional key grants **60 requests/minute per key**, shared across all clients using
+An optional key grants **30 requests/minute per key**, shared across all clients using
 that key. Invalid or revoked credentials return 401; exceeding either limit returns 429.
 Do not supply a placeholder key in clients that support omitting authentication.
 
@@ -73,12 +73,14 @@ curl https://ai.leolevd.dev/api/v1/chat/completions \
 Rate-limit counters use a SHA-256 key identifier. The proxy never forwards your incoming
 authorization header to providers.
 
-Optional server environment variables:
+Rate limits are hardcoded in `main.py`: `FREE_RPM = 10` and `KEY_RPM = 30`.
+Environment variables cannot override these limits.
+
+Optional server environment variables for file storage and counter storage:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `LEOAI_KEYS_FILE` | `API/keys.json` under the project | Optional alternative path to your private JSON key file |
-| `LEOAI_KEY_RPM` | `60` | Keyed requests per minute, must be greater than 10; restart after changing |
 | `LEOAI_RATE_LIMIT_STORAGE_URI` | `memory://` | SlowAPI counter backend; e.g. `redis://localhost:6379/0` |
 
 The default counters are per process and reset on restart. Run one worker for these

@@ -12,9 +12,8 @@ from slowapi.util import get_remote_address
 from API.forward import forward_openai_request
 from API.keys import lookup_key
 
-KEY_RPM = int(os.environ.get("LEOAI_KEY_RPM", "60"))
-if KEY_RPM <= 10:
-    raise ValueError("LEOAI_KEY_RPM must be greater than the free tier's 10 RPM")
+FREE_RPM = 10
+KEY_RPM = 30
 
 
 def authenticate_optional_key(request: Request):
@@ -37,7 +36,7 @@ def rate_limit_identity(request: Request):
 
 
 def request_limit(key):
-    return f"{KEY_RPM}/minute" if key.startswith("key:") else "10/minute"
+    return f"{KEY_RPM}/minute" if key.startswith("key:") else f"{FREE_RPM}/minute"
 
 # Empero's free endpoint is offline for maintenance; exclude it from fallback.
 providers = ["nvidia", "gonka", "kilo", "vercel"]

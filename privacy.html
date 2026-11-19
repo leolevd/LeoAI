@@ -68,8 +68,8 @@
                     save prompts or responses as conversation history.</li>
                 <li><strong>Rate limiting:</strong> the app uses the client IP address visible to the server to
                     maintain temporary counters, enforcing 10 requests per minute for unauthenticated access.
-                    Optional valid API keys use a key identifier instead, with a higher limit (60 requests per
-                    minute by default, configurable by the operator). Counters are stored in process memory by
+                    Optional valid API keys use a key identifier instead, with a higher limit (30 requests per
+                    minute). Counters are stored in process memory by
                     default and reset on restart; deployments may configure a shared counter backend such as Redis.
                     Counter expiry follows the rate-limit window.</li>
                 <li><strong>Optional API keys:</strong> free access requires no key or account. For issued keys,
